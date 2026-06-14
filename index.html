@@ -69,16 +69,10 @@
 
             try {
 
-                await fetch(
-                    "https://script.google.com/macros/s/AKfycbyF1WKB4m7v1Em57_W9hWU6AcGPBHCwdoeznyD9tXG52yJPtfFF-bq2pxV7FEDgcUHlNA/exec",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(data)
-                    }
-                );
+await fetch("https://script.google.com/macros/s/AKfycbyF1WKB4m7v1Em57_W9hWU6AcGPBHCwdoeznyD9tXG52yJPtfFF-bq2pxV7FEDgcUHlNA/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+});
 
                 document.getElementById("result").innerHTML =
                     "Submitted successfully!";
