@@ -1,67 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Simple Form</title>
+<script>
+    const now = new Date();
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 80px;
-        }
+    document.getElementById("date").innerHTML =
+        now.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "America/Chicago"
+        });
 
-        input {
-            padding: 8px;
-            width: 250px;
-        }
+    async function submitForm() {
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
+        let name =
+            document.getElementById("nameInput").value;
 
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
-</head>
+        let data = {
+            date: new Date().toLocaleString(
+                "en-US",
+                { timeZone: "America/Chicago" }
+            ),
+            name: name
+        };
 
-<body>
+        try {
 
-    <h2 id="date"></h2>
-
-    <h3>What is your name?</h3>
-
-    <input type="text" id="nameInput" placeholder="Enter your name">
-
-    <br>
-
-    <button onclick="submitForm()">Submit</button>
-
-    <p id="result"></p>
-
-    <script>
-        const now = new Date();
-
-        document.getElementById("date").innerHTML =
-            now.toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                timeZone: "America/Chicago"
-            });
-
-        function submitForm() {
-            let name =
-                document.getElementById("nameInput").value;
+            await fetch(
+                "https://script.google.com/macros/s/AKfycby24v3os5pjsQp8REklYoh330p2WvAAu69GbW-cV5nb90xsEjakmpy2HbDjpyzqP85pxw/exec",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
 
             document.getElementById("result").innerHTML =
-                "Hello, " + name + "!";
-        }
-    </script>
+                "Submitted successfully!";
 
-</body>
-</html>
+        } catch (error) {
+
+            document.getElementById("result").innerHTML =
+                "Error submitting form.";
+
+            console.error(error);
+        }
+    }
+</script>
